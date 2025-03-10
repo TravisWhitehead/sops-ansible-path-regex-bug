@@ -1,0 +1,18 @@
+[env]
+_.python.venv = { path = "{{config_root}}/.venv", create = true }
+ANSIBLE_COLLECTIONS_PATH = "{{config_root}}/.venv/galaxy"
+ANSIBLE_ROLES_PATH = "{{config_root}}/.venv/galaxy/ansible_roles"
+ANSIBLE_VARS_ENABLED = "host_group_vars,community.sops.sops"
+SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
+
+[tasks.deps]
+description = "Install Python dependencies"
+run = """
+pip install -r requirements.txt
+ansible-galaxy install --role-file requirements.yaml --force
+"""
+
+[tools]
+"python" = "3.13"
+"aqua:FiloSottile/age" = "1.2.1"
+"aqua:getsops/sops" = "3.9.4"

@@ -1,0 +1,22 @@
+- name: Reproduce sops_encrypt bug
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Get absolute path to this repo # noqa: command-instead-of-module
+      ansible.builtin.command: git rev-parse --show-toplevel
+      delegate_to: localhost
+      become: false
+      run_once: true
+      register: repository_path
+      changed_when: false
+      check_mode: false
+      failed_when: repository_path.rc != 0
+
+    - name: Try encrypting example file
+      community.sops.sops_encrypt:
+        path: "output/examplesecret.sops.yaml"
+        content_yaml: '{{ "hello: world" | from_yaml }}'
+        # this is an example key (see age.key)
+        age: ["age187022d9nqqe79qaphrn99stjdyt26kchm539s5w2mljdtw0p7cvq4xwreu"]
+        mode: "0644"
+        force: true
