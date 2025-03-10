@@ -1,12 +1,12 @@
 ---
 creation_rules:
-  # this fails because it tries to match on part of the path (foobar/)
-  # - path_regex: foobar/examplesecret\.sops\.yaml
-  #   key_groups:
-  #     - age:
-  #         - "age187022d9nqqe79qaphrn99stjdyt26kchm539s5w2mljdtw0p7cvq4xwreu"
-  # this works because it is only matching on the filename
-  - path_regex: examplesecret\.sops\.yaml
+  # this fails because it tries to match on part of the path (output/)
+  - path_regex: output/examplesecret\.sops\.yaml
     key_groups:
       - age:
           - "age187022d9nqqe79qaphrn99stjdyt26kchm539s5w2mljdtw0p7cvq4xwreu"
+  # this works because it is only matching on the filename
+  # - path_regex: examplesecret\.sops\.yaml
+  #   key_groups:
+  #     - age:
+  #         - "age187022d9nqqe79qaphrn99stjdyt26kchm539s5w2mljdtw0p7cvq4xwreu"
