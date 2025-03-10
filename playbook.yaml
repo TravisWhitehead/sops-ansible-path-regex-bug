@@ -2,16 +2,6 @@
   hosts: localhost
   connection: local
   tasks:
-    - name: Get absolute path to this repo # noqa: command-instead-of-module
-      ansible.builtin.command: git rev-parse --show-toplevel
-      delegate_to: localhost
-      become: false
-      run_once: true
-      register: repository_path
-      changed_when: false
-      check_mode: false
-      failed_when: repository_path.rc != 0
-
     - name: Try encrypting example file
       community.sops.sops_encrypt:
         path: "output/examplesecret.sops.yaml"
